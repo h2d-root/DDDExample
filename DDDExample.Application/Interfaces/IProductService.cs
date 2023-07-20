@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDDExample.Infrastructure.Data.Entities
+namespace DDDExample.Application.Interfaces
 {
-    public class ProductDal:IProductDal
+
+    public interface IProductService
     {
     }
 }

@@ -1,7 +1,7 @@
 ﻿using DDDExample.domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DDDExample.Infrastructure.Data.EF
+namespace DDDExample.Infrastructure.EntityFramework
 {
     public class DDDExampleDBContext : DbContext
     {
