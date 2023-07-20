@@ -7,5 +7,7 @@ namespace DDDExample.Application.Interfaces
     {
         public bool Register(User user);
         public User Login(LoginDTO login);
+        public List<User> GetUsers();
+        public User UserInfo(Guid id);
     }
 }

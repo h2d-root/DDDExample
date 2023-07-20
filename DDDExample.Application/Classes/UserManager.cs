@@ -39,5 +39,14 @@ namespace DDDExample.Application.Classes
             }
             
         }
+        public List<User> GetUsers()
+        {
+            return _userDal.GetAll();
+        }
+        public User UserInfo(Guid id)
+        {
+            var result = _userDal.Get(u =>u.Id == id);
+            return result;
+        }
     }
 }
