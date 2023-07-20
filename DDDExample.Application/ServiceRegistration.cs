@@ -14,6 +14,7 @@ namespace DDDExample.Application
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IBasketService, BasketManager>();
+            services.AddScoped<IAddressService, AddressManager>();
             return services;
         }
     }

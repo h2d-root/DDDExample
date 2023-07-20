@@ -39,6 +39,25 @@ namespace DDDExample.Application.Classes
             }
             
         }
+        public bool EditUser(EditUser editUser, Guid id)
+        {
+            User user = new User();
+            user = _userDal.Get(u=>u.Id == id);
+            if (user != null)
+            {
+                user.Name= editUser.Name;
+                user.LastName = editUser.LastName;
+                user.PhoneNumber = editUser.PhoneNumber;
+                _userDal.Update(user);
+                return true;
+            }
+            return false;
+        }
+        public Guid GetByUserId(string username)
+        {
+            var result = _userDal.Get(u=>u.UserName == username);
+            return result.Id;
+        }
         public List<User> GetUsers()
         {
             return _userDal.GetAll();
@@ -49,4 +68,5 @@ namespace DDDExample.Application.Classes
             return result;
         }
     }
+
 }

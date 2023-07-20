@@ -1,29 +1,40 @@
 ﻿using DDDExample.Application.DTO;
 using DDDExample.Application.Interfaces;
 using DDDExample.domain.Entity;
+using DDDExample.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace DDDExample.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserOperation : ControllerBase
+    public class UserController : ControllerBase
     {
         IUserService _userService;
         private readonly IConfiguration _configuration;
         IHttpContextAccessor httpContextAccessor;
+        JwtHelper jwtHelper = new JwtHelper();
 
 
-        public UserOperation(IConfiguration configuration, IUserService userService, IHttpContextAccessor httpContextAccessor = null)
+        public UserController(IConfiguration configuration, IUserService userService, IHttpContextAccessor httpContextAccessor = null)
         {
             _configuration = configuration;
             _userService = userService;
             this.httpContextAccessor = httpContextAccessor;
+        }
+
+        [HttpPost("EditProfile")]
+        public IActionResult EditProfile(EditUser editUser)
+        {
+            var userId = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst("id")?.Value);
+            var result = _userService.EditUser(editUser, userId);
+            if (result)
+            {
+                return Ok("başarılı bir şekilde güncellendi");
+            }
+            return Ok("hatalı işlem");
         }
 
         [HttpPost("Register")]
@@ -48,33 +59,13 @@ namespace DDDExample.API.Controllers
 
             // Kullanıcı başarıyla giriş yaptıysa, JWT oluşturun.
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var token = GenerateJwtToken(user, jwtSettings);
+            var token = jwtHelper.GenerateJwtToken(user, jwtSettings);
 
             // Token'ı istemciye gönderin veya dilediğiniz şekilde kullanın.
             return Ok(new { Token = token });
         }
 
-        private string GenerateJwtToken(User user, IConfiguration jwtSettings)
-        {
-            var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-            new Claim("id", user.Id.ToString()),
-            new Claim("passwd", user.Password),
-            new Claim("username", user.UserName),
-                    // Dilediğiniz diğer talepleri ekleyebilirsiniz.
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["TokenExpirationMinutes"])),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+        
 
         [Authorize]
         [HttpGet("UserInfo")]

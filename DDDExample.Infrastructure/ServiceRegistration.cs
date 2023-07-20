@@ -18,6 +18,7 @@ namespace DDDExample.Infrastructure
             services.AddScoped<ICategoryDal,CategoryDal>();
             services.AddScoped<IOrderDal, OrderDal>();
             services.AddScoped<IBasketDal, BasketDal>();
+            services.AddScoped<IAddressDal, AddressDal>();
             return services;
         } 
     }
