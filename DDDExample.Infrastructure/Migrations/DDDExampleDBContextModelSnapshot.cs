@@ -56,6 +56,9 @@ namespace DDDExample.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Adet")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("NewPrice")
                         .HasColumnType("numeric");
 

@@ -4,7 +4,6 @@ using DDDExample.domain.Entity;
 using DDDExample.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace DDDExample.API.Controllers
 {

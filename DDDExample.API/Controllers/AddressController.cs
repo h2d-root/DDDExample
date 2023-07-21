@@ -1,5 +1,6 @@
 ﻿using DDDExample.Application.Interfaces;
 using DDDExample.domain.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,10 +31,12 @@ namespace DDDExample.API.Controllers
             var result = _addressService.GetUserAdress(userId);
             return Ok(result);
         }
+        [Authorize]
         [HttpPost("AddAddress")]
         public IActionResult AddAddress(Address address)
         {
             address.UserId = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst("id")?.Value);
+            
             var result = _addressService.AddAdress(address);
             if (result)
             {

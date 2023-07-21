@@ -31,6 +31,7 @@ namespace DDDExample.API.Controllers
         {
             var userId = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst("id")?.Value);
             dto.UserId = userId;
+           
             if (_basketService.AddProduct(dto))
             {
                 return Ok("Ürün Eklendi");

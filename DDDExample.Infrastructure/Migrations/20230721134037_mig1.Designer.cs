@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DDDExample.Infrastructure.Migrations
 {
     [DbContext(typeof(DDDExampleDBContext))]
-    [Migration("20230721114549_mig")]
-    partial class mig
+    [Migration("20230721134037_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace DDDExample.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Adet")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("NewPrice")
                         .HasColumnType("numeric");

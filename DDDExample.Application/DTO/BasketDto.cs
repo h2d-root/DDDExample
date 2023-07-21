@@ -10,5 +10,6 @@ namespace DDDExample.Application.DTO
     {
         public Guid ProductId { get; set; }
         public Guid UserId { get; set; }
+        public int Adet { get; set; }
     }
 }

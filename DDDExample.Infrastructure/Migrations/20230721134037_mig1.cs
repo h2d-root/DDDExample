@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DDDExample.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class mig : Migration
+    public partial class mig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,8 @@ namespace DDDExample.Infrastructure.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProductName = table.Column<string>(type: "text", nullable: false),
                     NewPrice = table.Column<decimal>(type: "numeric", nullable: false),
-                    OldPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                    OldPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    Adet = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

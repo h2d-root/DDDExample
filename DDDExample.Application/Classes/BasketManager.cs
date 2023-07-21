@@ -22,13 +22,29 @@ namespace DDDExample.Application.Classes
         {
             try
             {
-                var product = _productDal.Get(p => p.Id == dto.ProductId);
                 Basket basket = new Basket();
+                //basket.Adet = dto.Adet;
+                if (dto.Adet == 0)
+                {
+                    dto.Adet = 1;
+                }
+                var control = _basketDal.Get(b=>b.ProductId == dto.ProductId && b.UserId == dto.UserId);
+                if (control != null)
+                {
+                    control.Adet += dto.Adet;
+                    basket.Adet = control.Adet;
+                    _basketDal.Update(control);
+                }
+                else
+                {
+
+                var product = _productDal.Get(p => p.Id == dto.ProductId);
                 basket.UserId=dto.UserId;
                 basket.ProductId = dto.ProductId;
                 basket.NewPrice = product.Price;
                 basket.ProductName = product.ProductName;
                 _basketDal.Add(basket);
+                }
                 return true;
             }
             catch (Exception)
