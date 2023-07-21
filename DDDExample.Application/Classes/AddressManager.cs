@@ -23,6 +23,7 @@ namespace DDDExample.Application.Classes
             var result = _addressDal.GetAll(u => u.UserId == address.UserId);
             if (result.Count < 3)
             {
+                address.Id = Guid.NewGuid();
                 _addressDal.Add(address);
                 return true;
             }
